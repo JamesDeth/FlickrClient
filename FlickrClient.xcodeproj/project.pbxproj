@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		5542EC5F23A7F94A00582820 /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5542EC5E23A7F94A00582820 /* Photo.swift */; };
 		55AA038123A8068D0001A03B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 55AA038023A8068D0001A03B /* Main.storyboard */; };
+		55AA038323A81A0A0001A03B /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55AA038223A81A0A0001A03B /* LocationService.swift */; };
 		55D4EE0223A6F96500BB8196 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D4EE0123A6F96500BB8196 /* NetworkService.swift */; };
 		55D4EE0423A6F96A00BB8196 /* NetworkDataFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D4EE0323A6F96A00BB8196 /* NetworkDataFetcher.swift */; };
 		55D4EE0823A6F98E00BB8196 /* SearchResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D4EE0723A6F98E00BB8196 /* SearchResults.swift */; };
@@ -24,6 +25,7 @@
 /* Begin PBXFileReference section */
 		5542EC5E23A7F94A00582820 /* Photo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
 		55AA038023A8068D0001A03B /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		55AA038223A81A0A0001A03B /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
 		55D4EE0123A6F96500BB8196 /* NetworkService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		55D4EE0323A6F96A00BB8196 /* NetworkDataFetcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkDataFetcher.swift; sourceTree = "<group>"; };
 		55D4EE0723A6F98E00BB8196 /* SearchResults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResults.swift; sourceTree = "<group>"; };
@@ -54,6 +56,7 @@
 			children = (
 				55D4EE0323A6F96A00BB8196 /* NetworkDataFetcher.swift */,
 				55D4EE0123A6F96500BB8196 /* NetworkService.swift */,
+				55AA038223A81A0A0001A03B /* LocationService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -182,6 +185,7 @@
 			files = (
 				55D4EE0E23A746A200BB8196 /* Download.swift in Sources */,
 				55EDE7B023A65A5F00EC1FBA /* TableViewController.swift in Sources */,
+				55AA038323A81A0A0001A03B /* LocationService.swift in Sources */,
 				5542EC5F23A7F94A00582820 /* Photo.swift in Sources */,
 				55EDE7AC23A65A5F00EC1FBA /* AppDelegate.swift in Sources */,
 				55D4EE0223A6F96500BB8196 /* NetworkService.swift in Sources */,

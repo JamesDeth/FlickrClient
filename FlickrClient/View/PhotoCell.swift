@@ -14,10 +14,14 @@ class PhotoCell: UITableViewCell {
     
     func configure(photo: Photo) {
 
-        photo.size = .small_320x
-        print(photo.url)
-        photoImageView.load(photo: photo)
-
+        if let image = photo.image {
+            photoImageView.image = image
+        } else {
+            photo.size = .small_320x
+            print(photo.url)
+            photoImageView.load(photo: photo)
+        }
+        
     }
     
     override func prepareForReuse() {

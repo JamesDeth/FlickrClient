@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreLocation
 
 class TableViewController: UITableViewController {
 
@@ -16,6 +17,7 @@ class TableViewController: UITableViewController {
     
     
     private let networkDataFetcher = NetworkDataFetcher(networkService: NetworkService(apiKey: "207453be27ace4aff3011edca54a6dde"))
+    private let locationService = LocationService()
     private var searchResults: [Photo] = []
 //    private let downloadService = DownloadService()
 //    private let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
@@ -25,9 +27,6 @@ class TableViewController: UITableViewController {
         // Do any additional setup after loading the view.
     }
 
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        self.segue = segue
-    }
 
 // MARK: - Table View Delegate
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -58,7 +57,6 @@ class TableViewController: UITableViewController {
         return searchResults.count
         
     }
- 
     
 }
 
@@ -67,23 +65,21 @@ class TableViewController: UITableViewController {
 //
 extension TableViewController: UISearchBarDelegate {
     
-    func searchBarResultsListButtonClicked(_ searchBar: UISearchBar) {
-        print(#function)
-    }
-    
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        print(#function)
-    }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         
-        print("test", self.tabBar.tag)
+        var location: (lat: Float?, lon: Float?)
+        if self.tabBar.tag == 2 {
+            location = locationService.getLocation()
+        }
+        
+        
 
         self.searchResults.removeAll()
         guard let searchText = searchBar.text, !searchText.isEmpty else { return }
         searchBar.resignFirstResponder()
 
-        networkDataFetcher.fetchImages(searchTerm: searchText) { [weak self] (searchResults) in
+        networkDataFetcher.fetchImages(searchTerm: searchText, latitude: location.lat, longitude: location.lon) { [weak self] (searchResults) in
 
             if let searchResults = searchResults {
                 searchResults.photos.photo.map { (flickrPhoto) in
@@ -94,15 +90,16 @@ extension TableViewController: UISearchBarDelegate {
             }
         }
     }
-
     
 }
 
 
 extension UIImage {
+    
     func getImageRatio() -> CGFloat {
         let widthRatio = CGFloat(self.size.width / self.size.height)
         return widthRatio
     }
+    
 }
 
