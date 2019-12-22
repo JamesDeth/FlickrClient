@@ -23,7 +23,7 @@ class PhotoCollectionViewContorller: UICollectionViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         if self.navigation.title == "Nearby"{
-            if self.locationService.setup() {
+            if self.locationService.Error() {
                 self.locationService.startLocationManager()
             } else { self.showLocationServicesDeniedAlert() }
         }
@@ -70,7 +70,7 @@ class PhotoCollectionViewContorller: UICollectionViewController {
 extension PhotoCollectionViewContorller : UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
-        if self.navigation.title == "Nearby" && !self.locationService.updatingLocation {
+        if self.navigation.title == "Nearby" && !self.locationService.Error() {
             self.showLocationServicesDeniedAlert()
             return true
         }
@@ -123,7 +123,7 @@ extension PhotoCollectionViewContorller {
             let activityIndicator = UIActivityIndicatorView(style: .medium)
             self?.collectionView.addSubview(activityIndicator)
             if let center = self?.collectionView.center { activityIndicator.center = center }
-            activityIndicator.translatesAutoresizingMaskIntoConstraints = true
+//            activityIndicator.translatesAutoresizingMaskIntoConstraints = true
             activityIndicator.startAnimating()
 
             self?.networkDataFetcher.fetchImages(searchTerm: searchTerm, latitude: self?.locationService.latitude, longitude: self?.locationService.longitude, page: page) { (sResults) in

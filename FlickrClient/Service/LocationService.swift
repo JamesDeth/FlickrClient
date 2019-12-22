@@ -69,7 +69,7 @@ class LocationService: NSObject, CLLocationManagerDelegate {
         }
     }
 
-    func setup() -> Bool {
+    func Error() -> Bool {
         let authStatus = CLLocationManager.authorizationStatus()
         if authStatus == .notDetermined {
             self.locationManager.requestWhenInUseAuthorization()

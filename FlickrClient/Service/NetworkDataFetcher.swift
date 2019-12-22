@@ -16,18 +16,6 @@ class NetworkDataFetcher {
         self.networkService = networkService
     }
 
-//    func fetchImages(searchTerm: String, completion: @escaping (SearchResults?) -> ()) {
-//        networkService.request(searchTerm: searchTerm) { (data, error) in
-//            if let error = error {
-//                print("Error received requesting data: \(error.localizedDescription)")
-//                completion(nil)
-//            }
-//
-//            let decode = self.decodeJSON(type: SearchResults.self, from: data)
-//            completion(decode)
-//        }
-//    }
-    
     func fetchImages(searchTerm: String, latitude: Float? = nil, longitude: Float? = nil, page: Int?, completion: @escaping (SearchResults?) -> ()) {
         networkService.request(searchTerm: searchTerm, latitude: latitude, longitude: longitude, page: page) { (data, error) in
             if let error = error {
