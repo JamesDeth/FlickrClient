@@ -59,7 +59,7 @@ class PhotoCollectionViewContorller: UICollectionViewController {
         
         if let sRes = self.searchResults {
             if self.Photos.count - 2 == indexPath.row && sRes.photos.pages > sRes.photos.page {
-                self.loadImages(searchTerm: self.textField.text!, async: true, page: sRes.photos.page + 1)
+                self.loadImages(searchTerm: self.textField.text!, async: false, page: sRes.photos.page + 1)
             }
         }
         return cell
@@ -119,13 +119,13 @@ extension PhotoCollectionViewContorller {
     }
     
     private func loadImages(searchTerm: String, async: Bool = false, page: Int? = nil) -> Void {
+        let activityIndicator = UIActivityIndicatorView(style: .medium)
+        self.collectionView.addSubview(activityIndicator)
+        activityIndicator.center = self.collectionView.center
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = true
+        activityIndicator.startAnimating()
+        
         let exec = { [weak self] in
-            let activityIndicator = UIActivityIndicatorView(style: .medium)
-            self?.collectionView.addSubview(activityIndicator)
-            if let center = self?.collectionView.center { activityIndicator.center = center }
-//            activityIndicator.translatesAutoresizingMaskIntoConstraints = true
-            activityIndicator.startAnimating()
-
             self?.networkDataFetcher.fetchImages(searchTerm: searchTerm, latitude: self?.locationService.latitude, longitude: self?.locationService.longitude, page: page) { (sResults) in
                 activityIndicator.removeFromSuperview()
                 self?.searchResults = sResults
@@ -142,9 +142,7 @@ extension PhotoCollectionViewContorller {
             }
         }
         if async {
-            DispatchQueue.main.async {
-                exec()
-            }
+            DispatchQueue.global(qos: .userInteractive).async { exec() }
         } else {
             exec()
         }
