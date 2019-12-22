@@ -15,19 +15,8 @@ class NetworkService {
     init(apiKey: String) {
         self.apiKey = apiKey
     }
-
-//    func request(searchTerm: String, completion: @escaping (Data?, Error?) -> Void)  {
-//
-//        let parameters = self.prepareParaments(searchTerm: searchTerm)
-//        let url = self.url(params: parameters)
-//        var request = URLRequest(url: url)
-//        request.httpMethod = "get"
-//        let task = createDataTask(from: request, completion: completion)
-//        task.resume()
-//    }
     
     func request(searchTerm: String, latitude: Float? = nil, longitude: Float? = nil, page: Int?, completion: @escaping (Data?, Error?) -> Void)  {
-        
         let parameters = self.prepareParaments(searchTerm: searchTerm, latitude: latitude, longitude: longitude, radius: 5, page: page)
         let url = self.url(params: parameters)
         var request = URLRequest(url: url)
@@ -44,19 +33,14 @@ class NetworkService {
         parameters["nojsoncallback"] = "1"
         parameters["format"] = "json"
         parameters["api_key"] = apiKey
-        
         parameters["text"] = searchTerm
-        
         if let latitude = latitude, let longitude = longitude, let radius = radius {
             parameters["lat"] = String(latitude)
             parameters["lon"] = String(longitude)
             parameters["radius"] = String(radius)
         }
-
         parameters["per_page"] = String(20)
         parameters["page"] = String(page ?? 1)
-        
-        
         return parameters
     }
     
@@ -76,5 +60,4 @@ class NetworkService {
             }
         }
     }
-    
 }

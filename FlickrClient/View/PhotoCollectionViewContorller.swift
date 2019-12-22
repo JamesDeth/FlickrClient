@@ -22,14 +22,16 @@ class PhotoCollectionViewContorller: UICollectionViewController {
     var fetcherPage: String = ""
     
     override func viewWillAppear(_ animated: Bool) {
-        if self.navigation.title == "Nearby" && locationService.setup() {
-            locationService.startLocationManager()
+        if self.navigation.title == "Nearby"{
+            if self.locationService.setup() {
+                self.locationService.startLocationManager()
+            } else { self.showLocationServicesDeniedAlert() }
         }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        if locationService.updatingLocation {
-            locationService.stopLocationManager()
+        if self.locationService.updatingLocation {
+            self.locationService.stopLocationManager()
         }
     }
     
@@ -51,8 +53,6 @@ class PhotoCollectionViewContorller: UICollectionViewController {
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! PhotoCell
-        
-        cell.backgroundColor = UIColor.cyan
         let index: Int = indexPath.row
         cell.index = index
         cell.imageView.image = self.Photos[index].thumbnail
@@ -69,10 +69,12 @@ class PhotoCollectionViewContorller: UICollectionViewController {
 // MARK: - UITextFieldDelegate
 extension PhotoCollectionViewContorller : UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        self.loadImages(searchTerm: textField.text!)
-        
-//        textField.text = nil
         textField.resignFirstResponder()
+        if self.navigation.title == "Nearby" && !self.locationService.updatingLocation {
+            self.showLocationServicesDeniedAlert()
+            return true
+        }
+        self.loadImages(searchTerm: textField.text!)
         return true
     }
 }
@@ -107,7 +109,15 @@ extension PhotoCollectionViewContorller: UICollectionViewDelegateFlowLayout {
   }
 }
 
+// MARK: - Helper Methods
 extension PhotoCollectionViewContorller {
+    func showLocationServicesDeniedAlert() {
+        let alert = UIAlertController(title: "Location Services Failute", message: self.locationService.statusMessage, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alert.addAction(okAction)
+        present(alert, animated: true, completion: nil)
+    }
+    
     private func loadImages(searchTerm: String, async: Bool = false, page: Int? = nil) -> Void {
         let exec = { [weak self] in
             let activityIndicator = UIActivityIndicatorView(style: .medium)

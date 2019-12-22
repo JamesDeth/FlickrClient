@@ -33,7 +33,7 @@ class LocationService: NSObject, CLLocationManagerDelegate {
     var statusMessage: String = ""
  
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        print("didFailWithError \(error.localizedDescription)")
+        statusMessage = "didFailWithError \(error.localizedDescription)"
         if (error as NSError).code == CLError.locationUnknown.rawValue { return }
         self.lastLocationError = error
         self.stopLocationManager()
@@ -69,15 +69,13 @@ class LocationService: NSObject, CLLocationManagerDelegate {
         }
     }
 
-
     func setup() -> Bool {
         let authStatus = CLLocationManager.authorizationStatus()
         if authStatus == .notDetermined {
             self.locationManager.requestWhenInUseAuthorization()
+            statusMessage = "Location Services Disabled"
             return false
-        }
-        
-        if let error = lastLocationError as NSError? {
+        } else if let error = lastLocationError as NSError? {
             if error.domain == kCLErrorDomain && error.code == CLError.denied.rawValue {
                 statusMessage = "Location Services Disabled"
                 return false
