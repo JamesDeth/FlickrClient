@@ -142,7 +142,7 @@ extension PhotoCollectionViewContorller {
             }
         }
         if async {
-            DispatchQueue.global(qos: .userInteractive).async { exec() }
+            DispatchQueue.main.async { exec() }
         } else {
             exec()
         }
