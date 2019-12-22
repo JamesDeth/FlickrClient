@@ -1,181 +1,236 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="49e-Tb-3d3">
-    <device id="retina6_5" orientation="portrait" appearance="light"/>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="KKc-uA-pRR">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Nearby-->
-        <scene sceneID="wg7-f3-ORb">
+        <!--Photos-->
+        <scene sceneID="bMU-Yc-xjS">
             <objects>
-                <viewController id="8rJ-Kc-sve" customClass="SecondViewController" customModule="FlickrClient" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="QS5-Rx-YEW">
+                <collectionViewController id="WvH-LZ-vET" customClass="PhotoCollectionViewContorller" customModule="FlickrClient" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="vKu-Zg-Nf9">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="GTM-ED-9Hc">
+                            <size key="itemSize" width="50" height="50"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="FlickrCell" id="rHm-Yt-hEb" customClass="PhotoCell" customModule="FlickrClient" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="ciQ-6R-A0Z">
+                                    <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="mul-l2-KQN">
+                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                        </imageView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="trailing" secondItem="mul-l2-KQN" secondAttribute="trailing" id="C3B-HH-gT3"/>
+                                        <constraint firstItem="mul-l2-KQN" firstAttribute="leading" secondItem="ciQ-6R-A0Z" secondAttribute="leading" id="eo7-P5-JtB"/>
+                                        <constraint firstItem="mul-l2-KQN" firstAttribute="top" secondItem="ciQ-6R-A0Z" secondAttribute="top" id="ibQ-yi-UgI"/>
+                                        <constraint firstAttribute="bottom" secondItem="mul-l2-KQN" secondAttribute="bottom" id="mVG-C5-VeF"/>
+                                    </constraints>
+                                </collectionViewCellContentView>
+                                <connections>
+                                    <outlet property="imageView" destination="mul-l2-KQN" id="wd9-5i-9kW"/>
+                                    <segue destination="BDJ-ig-Bwa" kind="show" id="dCs-YI-wq6"/>
+                                </connections>
+                            </collectionViewCell>
+                        </cells>
+                        <connections>
+                            <outlet property="dataSource" destination="WvH-LZ-vET" id="H4v-lQ-FB6"/>
+                            <outlet property="delegate" destination="WvH-LZ-vET" id="LLo-ik-D0t"/>
+                        </connections>
+                    </collectionView>
+                    <navigationItem key="navigationItem" title="Photos" id="nEj-wG-CJX">
+                        <textField key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Search" textAlignment="natural" minimumFontSize="17" id="kif-F5-f3e">
+                            <rect key="frame" x="57" y="5" width="300" height="34"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits" returnKeyType="search"/>
+                            <connections>
+                                <outlet property="delegate" destination="WvH-LZ-vET" id="GtW-fD-NxY"/>
+                            </connections>
+                        </textField>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="navigation" destination="nEj-wG-CJX" id="bte-7L-k9f"/>
+                        <outlet property="textField" destination="kif-F5-f3e" id="Z6O-Dg-7RT"/>
+                    </connections>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="C3G-j2-XDH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3797" y="-944"/>
+        </scene>
+        <!--Title-->
+        <scene sceneID="RaI-gX-twK">
+            <objects>
+                <viewController id="BDJ-ig-Bwa" customClass="PhotoViewController" customModule="FlickrClient" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="mDj-QZ-zrP">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" text="Second View" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="zEq-FU-wV5">
-                                <rect key="frame" x="106" y="426.66666666666669" width="202" height="43"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="36"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loaded by SecondViewController" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NDk-cv-Gan">
-                                <rect key="frame" x="99.666666666666686" y="477.66666666666669" width="215" height="17"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="F1P-wj-SDT">
+                                <rect key="frame" x="20" y="88" width="374" height="725"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="NDk-cv-Gan" firstAttribute="top" secondItem="zEq-FU-wV5" secondAttribute="bottom" constant="8" symbolic="YES" id="Day-4N-Vmt"/>
-                            <constraint firstItem="NDk-cv-Gan" firstAttribute="centerX" secondItem="zEq-FU-wV5" secondAttribute="centerX" id="JgO-Fn-dHn"/>
-                            <constraint firstAttribute="centerX" secondItem="zEq-FU-wV5" secondAttribute="centerX" id="qqM-NS-xev"/>
-                            <constraint firstAttribute="centerY" secondItem="zEq-FU-wV5" secondAttribute="centerY" id="qzY-Ky-pLD"/>
+                            <constraint firstItem="F1P-wj-SDT" firstAttribute="leading" secondItem="d4D-bJ-kGQ" secondAttribute="leading" constant="20" id="15C-ZV-Num"/>
+                            <constraint firstItem="F1P-wj-SDT" firstAttribute="top" secondItem="d4D-bJ-kGQ" secondAttribute="top" id="e6j-lx-6lY"/>
+                            <constraint firstItem="d4D-bJ-kGQ" firstAttribute="trailing" secondItem="F1P-wj-SDT" secondAttribute="trailing" constant="20" id="gMm-Zr-wh2"/>
+                            <constraint firstItem="F1P-wj-SDT" firstAttribute="bottom" secondItem="d4D-bJ-kGQ" secondAttribute="bottom" id="sk3-d8-9Vd"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="O1u-W8-tvY"/>
+                        <viewLayoutGuide key="safeArea" id="d4D-bJ-kGQ"/>
                     </view>
-                    <tabBarItem key="tabBarItem" tag="2" title="Nearby" image="map" catalog="system" selectedImage="map" id="cPa-gy-q4n"/>
+                    <navigationItem key="navigationItem" title="Title" largeTitleDisplayMode="always" id="b4b-7H-6rG"/>
+                    <connections>
+                        <outlet property="imageView" destination="F1P-wj-SDT" id="sM9-fU-v8k"/>
+                    </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="4Nw-L8-lE0" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="j3O-Ka-CvB" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1" y="838"/>
+            <point key="canvasLocation" x="4535" y="-944"/>
         </scene>
         <!--Tab Bar Controller-->
-        <scene sceneID="yl2-sM-qoP">
+        <scene sceneID="wxE-6h-ngh">
             <objects>
-                <tabBarController id="49e-Tb-3d3" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" id="evX-S1-hRv"/>
-                    <tabBar key="tabBar" contentMode="scaleToFill" id="W28-zg-YXA">
-                        <rect key="frame" x="0.0" y="975" width="768" height="49"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="KKc-uA-pRR" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="JjD-YI-JyV">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
                     <connections>
-                        <segue destination="fMR-Va-CIa" kind="relationship" relationship="viewControllers" destinationCreationSelector="segue:" id="f16-I6-XZx"/>
-                        <segue destination="B3X-vY-AKb" kind="relationship" relationship="viewControllers" id="zVV-K0-1p5"/>
+                        <segue destination="3Oi-Lp-5U7" kind="relationship" relationship="viewControllers" id="oNF-Lc-zbT"/>
+                        <segue destination="TJ0-G6-2mA" kind="relationship" relationship="viewControllers" id="400-0g-b7j"/>
                     </connections>
                 </tabBarController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="HuB-VB-40B" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ixQ-rs-w0V" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="0.0" y="0.0"/>
+            <point key="canvasLocation" x="1924.6376811594205" y="-540.40178571428567"/>
         </scene>
-        <!--Photos-->
-        <scene sceneID="JZA-jH-Kxt">
+        <!--Photo-->
+        <scene sceneID="yVU-lx-FfW">
             <objects>
-                <tableViewController id="fMR-Va-CIa" customClass="TableViewController" customModule="FlickrClient" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="gi4-MC-cwb">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <searchBar key="tableHeaderView" contentMode="redraw" id="NcH-50-6sX">
-                            <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                            <textInputTraits key="textInputTraits"/>
-                            <connections>
-                                <outlet property="delegate" destination="fMR-Va-CIa" id="g4a-H0-I6B"/>
-                            </connections>
-                        </searchBar>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="photoCell" id="hI4-W4-kqK" customClass="PhotoCell" customModule="FlickrClient" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="72" width="414" height="43.666667938232422"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="hI4-W4-kqK" id="nWs-aV-88q">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.666667938232422"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jIq-Ag-VHL">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.666666666666664"/>
-                                        </imageView>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstAttribute="trailing" secondItem="jIq-Ag-VHL" secondAttribute="trailing" id="4yt-ov-6Jn"/>
-                                        <constraint firstItem="jIq-Ag-VHL" firstAttribute="top" secondItem="nWs-aV-88q" secondAttribute="top" id="dKc-AX-2OY"/>
-                                        <constraint firstItem="jIq-Ag-VHL" firstAttribute="leading" secondItem="nWs-aV-88q" secondAttribute="leading" id="gt1-Pz-0wU"/>
-                                        <constraint firstAttribute="bottom" secondItem="jIq-Ag-VHL" secondAttribute="bottom" id="ooa-Gs-Wnv"/>
-                                    </constraints>
-                                </tableViewCellContentView>
-                                <connections>
-                                    <outlet property="photoImageView" destination="jIq-Ag-VHL" id="vUp-JO-S2i"/>
-                                </connections>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="fMR-Va-CIa" id="VLC-vS-Gkb"/>
-                            <outlet property="delegate" destination="fMR-Va-CIa" id="6gx-ai-3a2"/>
-                        </connections>
-                    </tableView>
-                    <tabBarItem key="tabBarItem" tag="1" title="Photos" image="photo" catalog="system" selectedImage="photo" id="LaK-uT-goj"/>
-                    <navigationItem key="navigationItem" id="jG3-Op-cTM"/>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="3Oi-Lp-5U7" customClass="NavigationController" customModule="FlickrClient" customModuleProvider="target" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Photo" image="photo" catalog="system" selectedImage="photo" id="HZB-MM-suj"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="74m-We-pPD">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
                     <connections>
-                        <outlet property="searchBar" destination="NcH-50-6sX" id="oQG-Ti-ymq"/>
-                        <outlet property="tabBar" destination="LaK-uT-goj" id="xie-Ik-4Rv"/>
+                        <outlet property="tabBar" destination="HZB-MM-suj" id="S3B-GL-r1z"/>
+                        <segue destination="WvH-LZ-vET" kind="relationship" relationship="rootViewController" destinationCreationSelector="photos:" id="x03-KF-GBe"/>
                     </connections>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="E0S-CE-ivm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ztG-e2-axt" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="814" y="-335"/>
+            <point key="canvasLocation" x="2887" y="-944"/>
         </scene>
         <!--Nearby-->
-        <scene sceneID="yID-zQ-Tut">
+        <scene sceneID="qNI-kK-yHS">
             <objects>
-                <tableViewController id="B3X-vY-AKb" customClass="TableViewController" customModule="FlickrClient" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="Wjl-lZ-u3B">
+                <placeholder placeholderIdentifier="IBFirstResponder" id="CNp-yZ-OmL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="TJ0-G6-2mA" customClass="NavigationController" customModule="FlickrClient" customModuleProvider="target" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Nearby" image="map" catalog="system" selectedImage="map" id="5Oy-dH-ygn"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Blw-EX-TlJ">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <outlet property="tabBar" destination="5Oy-dH-ygn" id="dKf-SQ-aIK"/>
+                        <segue destination="Bw4-50-bo8" kind="relationship" relationship="rootViewController" id="MVJ-tq-ABp"/>
+                    </connections>
+                </navigationController>
+            </objects>
+            <point key="canvasLocation" x="2887" y="-254"/>
+        </scene>
+        <!--Nearby-->
+        <scene sceneID="qs3-KJ-zfy">
+            <objects>
+                <collectionViewController id="Bw4-50-bo8" customClass="PhotoCollectionViewContorller" customModule="FlickrClient" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="VWM-CM-HQh">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <searchBar key="tableHeaderView" contentMode="redraw" id="uTI-Lz-0vU">
-                            <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                            <textInputTraits key="textInputTraits"/>
-                            <connections>
-                                <outlet property="delegate" destination="B3X-vY-AKb" id="Gms-fX-Ps8"/>
-                            </connections>
-                        </searchBar>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="photoCell" id="BRS-81-BbF" customClass="PhotoCell" customModule="FlickrClient" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="72" width="414" height="43.666667938232422"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="BRS-81-BbF" id="gEf-0Q-X50">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.666667938232422"/>
-                                    <autoresizingMask key="autoresizingMask"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="4hY-D3-nbz">
+                            <size key="itemSize" width="50" height="50"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="FlickrCell" id="akD-mF-waY" customClass="PhotoCell" customModule="FlickrClient" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="SKK-MW-ezA">
+                                    <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="4hk-0V-JBH">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.666666666666664"/>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="3XA-5n-RKz">
+                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                         </imageView>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="4hk-0V-JBH" firstAttribute="top" secondItem="gEf-0Q-X50" secondAttribute="top" id="Ekq-0r-HBe"/>
-                                        <constraint firstAttribute="bottom" secondItem="4hk-0V-JBH" secondAttribute="bottom" id="WQL-mc-vby"/>
-                                        <constraint firstAttribute="trailing" secondItem="4hk-0V-JBH" secondAttribute="trailing" id="f2I-JO-6PI"/>
-                                        <constraint firstItem="4hk-0V-JBH" firstAttribute="leading" secondItem="gEf-0Q-X50" secondAttribute="leading" id="yrx-qs-4zy"/>
+                                        <constraint firstItem="3XA-5n-RKz" firstAttribute="top" secondItem="SKK-MW-ezA" secondAttribute="top" id="TWC-wi-zQr"/>
+                                        <constraint firstAttribute="bottom" secondItem="3XA-5n-RKz" secondAttribute="bottom" id="aIx-nL-QyD"/>
+                                        <constraint firstAttribute="trailing" secondItem="3XA-5n-RKz" secondAttribute="trailing" id="pDO-XD-NHy"/>
+                                        <constraint firstItem="3XA-5n-RKz" firstAttribute="leading" secondItem="SKK-MW-ezA" secondAttribute="leading" id="vic-NS-TQz"/>
                                     </constraints>
-                                </tableViewCellContentView>
+                                </collectionViewCellContentView>
                                 <connections>
-                                    <outlet property="photoImageView" destination="4hk-0V-JBH" id="VXZ-WP-WxN"/>
+                                    <outlet property="imageView" destination="3XA-5n-RKz" id="CQW-nr-raU"/>
+                                    <segue destination="BDJ-ig-Bwa" kind="show" id="9Ha-Zf-QQo"/>
                                 </connections>
-                            </tableViewCell>
-                        </prototypes>
+                            </collectionViewCell>
+                        </cells>
                         <connections>
-                            <outlet property="dataSource" destination="B3X-vY-AKb" id="Ebe-5G-l6J"/>
-                            <outlet property="delegate" destination="B3X-vY-AKb" id="j2d-gy-d2x"/>
+                            <outlet property="dataSource" destination="Bw4-50-bo8" id="qRF-ts-hw3"/>
+                            <outlet property="delegate" destination="Bw4-50-bo8" id="uVX-9Z-tyv"/>
                         </connections>
-                    </tableView>
-                    <tabBarItem key="tabBarItem" tag="2" title="Nearby" image="map" catalog="system" selectedImage="map" id="dRP-4e-rZ6"/>
-                    <navigationItem key="navigationItem" id="mDa-qK-w2o"/>
+                    </collectionView>
+                    <navigationItem key="navigationItem" title="Nearby" id="SmV-4x-uMx">
+                        <textField key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Search" textAlignment="natural" minimumFontSize="17" id="q6O-nw-QLF">
+                            <rect key="frame" x="57" y="5" width="300" height="34"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits" returnKeyType="search"/>
+                            <connections>
+                                <outlet property="delegate" destination="Bw4-50-bo8" id="RuC-sV-nDQ"/>
+                            </connections>
+                        </textField>
+                    </navigationItem>
                     <connections>
-                        <outlet property="searchBar" destination="uTI-Lz-0vU" id="Tqq-pv-nzK"/>
-                        <outlet property="tabBar" destination="dRP-4e-rZ6" id="QeY-WM-hbt"/>
+                        <outlet property="navigation" destination="SmV-4x-uMx" id="pNq-Yo-Vll"/>
+                        <outlet property="textField" destination="q6O-nw-QLF" id="Uf9-cY-gcW"/>
                     </connections>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="wAR-W3-TwT" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="UIn-xT-rTc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="814" y="385"/>
+            <point key="canvasLocation" x="3796" y="-254"/>
         </scene>
     </scenes>
     <resources>
         <image name="map" catalog="system" width="64" height="56"/>
         <image name="photo" catalog="system" width="64" height="46"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="dCs-YI-wq6"/>
+    </inferredMetricsTieBreakers>
 </document>

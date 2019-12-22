@@ -10,24 +10,35 @@ import Foundation
 import UIKit
 
 class Photo {
-    
-    let flickrPhoto: FlickrPhoto
-    var image: UIImage?
-    var size: flickrPhotoSize = .small_75x75
+ 
+    private let flickrPhoto: FlickrPhoto
+    static let largeImageSize: flickrPhotoSize = .large_1024x
+    static let thumbnailSize: flickrPhotoSize = .small_320x
+    var largeImage: UIImage?
+    var thumbnail: UIImage?
+    var title: String {
+        return flickrPhoto.title
+    }
 
     init(flickrPhoto: FlickrPhoto) {
         self.flickrPhoto = flickrPhoto
     }
     
-    
-    var url: URL {
-        
+    func url(size: flickrPhotoSize) -> URL {
         var components = URLComponents()
         components.scheme = "https"
         components.host = "farm\(self.flickrPhoto.farm).staticflickr.com"
         components.path = "/\(self.flickrPhoto.server)/\(self.flickrPhoto.id)_\(self.flickrPhoto.secret)_\(size.rawValue).jpg"
         return components.url!
-
+    }
+    
+    func loadImage(by url: URL) -> UIImage? {
+        if let data = try? Data(contentsOf: url),
+            let image = UIImage(data: data) {
+            return image
+        } else {
+            return nil
+        }
     }
 }
 

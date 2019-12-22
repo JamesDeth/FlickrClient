@@ -25,38 +25,47 @@ class TableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        print(#function)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        print(self.tabBar.title ?? #function)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        print(self.tabBar.title ?? #function)
     }
 
 
 // MARK: - Table View Delegate
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        let index = indexPath.row
-        let currentImage = searchResults[index].image
-        let imageRatio = currentImage?.getImageRatio()
-        let heigth = tableView.frame.width / (imageRatio ?? 1)
-        
-        return heigth
-
-    }
+//    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//        let index = indexPath.row
+//        let currentImage = searchResults[index].image
+//        let imageRatio = currentImage?.getImageRatio()
+//        let heigth = tableView.frame.width / (imageRatio ?? 1)
+//        
+//        return heigth
+//
+//    }
 
 // MARK: - Table Data Source
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "photoCell", for: indexPath) as! PhotoCell
-
-        let photo = searchResults[indexPath.row]
-        cell.configure(photo: photo)
-        
-        return cell
-        
-    }
-    
-      
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        return searchResults.count
-        
-    }
+//    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//        let cell = tableView.dequeueReusableCell(withIdentifier: "photoCell", for: indexPath) as! PhotoCell
+//
+//        let photo = searchResults[indexPath.row]
+//        cell.configure(photo: photo)
+//
+//        return cell
+//
+//    }
+//
+//
+//    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+//
+//        return searchResults.count
+//
+//    }
     
 }
 
@@ -66,32 +75,42 @@ class TableViewController: UITableViewController {
 extension TableViewController: UISearchBarDelegate {
     
     
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        
-        var location: (lat: Float?, lon: Float?)
-        if self.tabBar.tag == 2 {
-            location = locationService.getLocation()
-        }
-        
-        
-
-        self.searchResults.removeAll()
-        guard let searchText = searchBar.text, !searchText.isEmpty else { return }
-        searchBar.resignFirstResponder()
-
-        networkDataFetcher.fetchImages(searchTerm: searchText, latitude: location.lat, longitude: location.lon) { [weak self] (searchResults) in
-
-            if let searchResults = searchResults {
-                searchResults.photos.photo.map { (flickrPhoto) in
-                    self?.searchResults.append(Photo(flickrPhoto: flickrPhoto))
-                }                
-                self?.tableView.reloadData()
-                self?.tableView.setContentOffset(CGPoint.zero, animated: false)
-            }
-        }
-    }
+//    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+//        
+//        var location: (lat: Float?, lon: Float?)
+//        if self.tabBar.tag == 2 {
+//            location = locationService.getLocation()
+//        }
+//        
+//        
+//
+//        self.searchResults.removeAll()
+//        guard let searchText = searchBar.text, !searchText.isEmpty else { return }
+//        searchBar.resignFirstResponder()
+//
+//        networkDataFetcher.fetchImages(searchTerm: searchText, latitude: location.lat, longitude: location.lon, page: nil) { [weak self] (searchResults) in
+//
+//            if let searchResults = searchResults {
+//                searchResults.photos.photo.map { (flickrPhoto) in
+//                    self?.searchResults.append(Photo(flickrPhoto: flickrPhoto))
+//                }                
+//                self?.tableView.reloadData()
+//                self?.tableView.setContentOffset(CGPoint.zero, animated: false)
+//            }
+//        }
+//    }
     
 }
+
+extension TableViewController: UITabBarDelegate {
+    
+    func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
+        print("selected:", item)
+    }
+     
+}
+
+
 
 
 extension UIImage {
