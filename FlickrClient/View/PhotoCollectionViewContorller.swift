@@ -59,9 +59,9 @@ class PhotoCollectionViewContorller: UICollectionViewController {
         cell.index = index
         cell.imageView.image = self.Photos[index].thumbnail
         
-        if let sRes = self.searchResults {
-            if self.Photos.count - 2 == indexPath.row && sRes.photos.pages > sRes.photos.page {
-                self.loadImages(searchTerm: self.textField.text!, page: sRes.photos.page + 1)
+        if let searchResult = self.searchResults {
+            if self.Photos.count - 2 == indexPath.row && searchResult.photos.pages > searchResult.photos.page {
+                self.loadImages(searchTerm: self.textField.text!, page: searchResult.photos.page + 1)
             }
         }
         return cell
@@ -122,7 +122,6 @@ extension PhotoCollectionViewContorller {
     
     private func loadImages(searchTerm: String, async: Bool = false, page: Int? = nil) -> Void {
         self.spinner.startAnimating()
-        
         self.networkDataFetcher.fetchImages(searchTerm: searchTerm, latitude: self.locationService.latitude, longitude: self.locationService.longitude, page: page) { [weak self] (searchResults) in
             self?.searchResults = searchResults
             if page == nil { self?.Photos.removeAll() }
@@ -135,7 +134,7 @@ extension PhotoCollectionViewContorller {
                 }
             }
             self?.collectionView?.reloadData()
-            self?.spinner.stopAnimating()
         }
+        self.spinner.stopAnimating()
     }
 }

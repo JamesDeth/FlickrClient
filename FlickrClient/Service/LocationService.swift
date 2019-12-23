@@ -66,6 +66,7 @@ class LocationService: NSObject, CLLocationManagerDelegate {
             self.locationManager.stopUpdatingLocation()
             self.locationManager.delegate = nil
             self.updatingLocation = false
+            self.location = nil
         }
     }
 
