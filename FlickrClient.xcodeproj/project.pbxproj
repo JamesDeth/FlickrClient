@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		552CFEAD23AF1FA200C9F832 /* PhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552CFEAC23AF1FA200C9F832 /* PhotoViewController.swift */; };
-		552CFEAF23AF332000C9F832 /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552CFEAE23AF332000C9F832 /* NavigationController.swift */; };
 		5542EC5F23A7F94A00582820 /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5542EC5E23A7F94A00582820 /* Photo.swift */; };
 		559B05A923ABFA8900B8317D /* PhotoCollectionViewContorller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 559B05A823ABFA8900B8317D /* PhotoCollectionViewContorller.swift */; };
 		55AA038323A81A0A0001A03B /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55AA038223A81A0A0001A03B /* LocationService.swift */; };
@@ -26,7 +25,6 @@
 
 /* Begin PBXFileReference section */
 		552CFEAC23AF1FA200C9F832 /* PhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoViewController.swift; sourceTree = "<group>"; };
-		552CFEAE23AF332000C9F832 /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
 		5542EC5E23A7F94A00582820 /* Photo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
 		559B05A823ABFA8900B8317D /* PhotoCollectionViewContorller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewContorller.swift; sourceTree = "<group>"; };
 		55AA038223A81A0A0001A03B /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
@@ -81,7 +79,6 @@
 				55D4EE1623A7C4B000BB8196 /* PhotoCell.swift */,
 				559B05A823ABFA8900B8317D /* PhotoCollectionViewContorller.swift */,
 				552CFEAC23AF1FA200C9F832 /* PhotoViewController.swift */,
-				552CFEAE23AF332000C9F832 /* NavigationController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -196,7 +193,6 @@
 				552CFEAD23AF1FA200C9F832 /* PhotoViewController.swift in Sources */,
 				55EDE7AC23A65A5F00EC1FBA /* AppDelegate.swift in Sources */,
 				55D4EE0223A6F96500BB8196 /* NetworkService.swift in Sources */,
-				552CFEAF23AF332000C9F832 /* NavigationController.swift in Sources */,
 				55D4EE1723A7C4B000BB8196 /* PhotoCell.swift in Sources */,
 				55EDE7AE23A65A5F00EC1FBA /* SceneDelegate.swift in Sources */,
 				55D4EE0823A6F98E00BB8196 /* SearchResults.swift in Sources */,

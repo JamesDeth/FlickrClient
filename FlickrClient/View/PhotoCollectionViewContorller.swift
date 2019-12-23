@@ -13,6 +13,8 @@ class PhotoCollectionViewContorller: UICollectionViewController {
     
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var navigation: UINavigationItem!
+    @IBOutlet weak var spinner: UIActivityIndicatorView!
+    
     private let reuseIdentifier = "FlickrCell"
     private let sectionInsets = UIEdgeInsets(top: 20.0, left: 20.0, bottom: 20.0, right: 20.0)
     private let networkDataFetcher = NetworkDataFetcher(networkService: NetworkService(apiKey: "207453be27ace4aff3011edca54a6dde"))
@@ -59,7 +61,7 @@ class PhotoCollectionViewContorller: UICollectionViewController {
         
         if let sRes = self.searchResults {
             if self.Photos.count - 2 == indexPath.row && sRes.photos.pages > sRes.photos.page {
-                self.loadImages(searchTerm: self.textField.text!, async: false, page: sRes.photos.page + 1)
+                self.loadImages(searchTerm: self.textField.text!, page: sRes.photos.page + 1)
             }
         }
         return cell
@@ -119,32 +121,21 @@ extension PhotoCollectionViewContorller {
     }
     
     private func loadImages(searchTerm: String, async: Bool = false, page: Int? = nil) -> Void {
-        let activityIndicator = UIActivityIndicatorView(style: .medium)
-        self.collectionView.addSubview(activityIndicator)
-        activityIndicator.center = self.collectionView.center
-        activityIndicator.translatesAutoresizingMaskIntoConstraints = true
-        activityIndicator.startAnimating()
+        self.spinner.startAnimating()
         
-        let exec = { [weak self] in
-            self?.networkDataFetcher.fetchImages(searchTerm: searchTerm, latitude: self?.locationService.latitude, longitude: self?.locationService.longitude, page: page) { (sResults) in
-                activityIndicator.removeFromSuperview()
-                self?.searchResults = sResults
-                if page == nil { self?.Photos.removeAll() }
-                self?.searchResults?.photos.photo.forEach { flickrPhoto in
-                    let photo = Photo(flickrPhoto: flickrPhoto)
-                    let url = photo.url(size: Photo.thumbnailSize)
-                    if let img = photo.loadImage(by: url) {
-                        photo.thumbnail = img
-                        self?.Photos.append(photo)
-                    }
+        self.networkDataFetcher.fetchImages(searchTerm: searchTerm, latitude: self.locationService.latitude, longitude: self.locationService.longitude, page: page) { [weak self] (searchResults) in
+            self?.searchResults = searchResults
+            if page == nil { self?.Photos.removeAll() }
+            self?.searchResults?.photos.photo.forEach { flickrPhoto in
+                let photo = Photo(flickrPhoto: flickrPhoto)
+                let url = photo.url(size: Photo.thumbnailSize)
+                if let img = photo.loadImage(by: url) {
+                    photo.thumbnail = img
+                    self?.Photos.append(photo)
                 }
-                self?.collectionView?.reloadData()
             }
-        }
-        if async {
-            DispatchQueue.main.async { exec() }
-        } else {
-            exec()
+            self?.collectionView?.reloadData()
+            self?.spinner.stopAnimating()
         }
     }
 }

@@ -11,10 +11,7 @@ import UIKit
 class PhotoViewController: UIViewController {
 
     @IBOutlet weak private var imageView: UIImageView!
-    @IBOutlet weak var nav: UINavigationItem!
-    
     public var photo: Photo? = nil
- 
     
     override func viewDidLoad() {
         super.viewDidLoad()
