@@ -122,7 +122,7 @@ extension PhotoCollectionViewContorller {
     
     private func loadImages(searchTerm: String, page: Int? = nil) -> Void {
         self.spinner.startAnimating()
-        self.networkService.request(searchTerm: searchTerm, latitude: self.locationService.latitude, longitude: self.locationService.longitude, page: page) { [weak self] (flickrResults: FlickrResults?, photos: [Photo]?) in
+        self.networkService.fetchImages(searchTerm: searchTerm, latitude: self.locationService.latitude, longitude: self.locationService.longitude, page: page) { [weak self] (flickrResults: FlickrResults?, photos: [Photo]?) in
             guard let flickrResults = flickrResults, let photos = photos else { return }
             self?.flickrResults = flickrResults
             if page == nil { self?.Photos.removeAll() }
