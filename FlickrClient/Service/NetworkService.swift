@@ -9,21 +9,51 @@
 import Foundation
 
 class NetworkService {
-    
+
+    private let LOCATION_RADIUS = 5
     private let apiKey:String
     
     init(apiKey: String) {
         self.apiKey = apiKey
     }
     
-    func request(searchTerm: String, latitude: Float? = nil, longitude: Float? = nil, page: Int?, completion: @escaping (Data?, Error?) -> Void)  {
-        let parameters = self.prepareParaments(searchTerm: searchTerm, latitude: latitude, longitude: longitude, radius: 5, page: page)
+    func fetchImages(searchTerm: String, latitude: Float? = nil, longitude: Float? = nil, page: Int?, completion: @escaping (_ flickrResults: FlickrResults?, _ photos: [Photo]?) -> Void)  {
+        let parameters = self.prepareParaments(searchTerm: searchTerm, latitude: latitude, longitude: longitude, radius: LOCATION_RADIUS, page: page)
         let url = self.url(params: parameters)
         var request = URLRequest(url: url)
         print(url)
         request.httpMethod = "get"
-        let task = createDataTask(from: request, completion: completion)
-        task.resume()
+        
+        URLSession.shared.dataTask(with: request) { (data, response, error) in
+            if error != nil {
+                DispatchQueue.main.async {
+                    completion(nil, nil)
+                }
+                return
+            }
+            
+            guard let _ = response as? HTTPURLResponse, let data = data, let flickrResults = self.decodeJSON(type: FlickrResults.self, from: data) else {
+                DispatchQueue.main.async {
+                    completion(nil, nil)
+                }
+                return
+            }
+            
+            var photos:[Photo] = []
+            flickrResults.photos.photo.forEach {
+                flickrPhoto in
+                let photo = Photo(flickrPhoto: flickrPhoto)
+                let url = photo.url(size: Photo.thumbnailSize)
+                if let img = photo.loadImage(by: url) {
+                    photo.thumbnail = img
+                    photos.append(photo)
+                }
+            }
+            
+            DispatchQueue.main.async {
+                completion(flickrResults, photos)
+            }
+        }.resume()
     }
     
     private func prepareParaments(searchTerm: String?, latitude: Float? = nil, longitude: Float? = nil, radius: Int? = nil, page: Int? = 1) -> [String: String] {
@@ -58,6 +88,19 @@ class NetworkService {
             DispatchQueue.main.async {
                 completion(data, error)
             }
+        }
+    }
+    
+    func decodeJSON<T: Decodable>(type: T.Type, from: Data?) -> T? {
+        let decoder = JSONDecoder()
+        guard let data = from else { return nil }
+
+        do {
+            let objects = try decoder.decode(type.self, from: data)
+            return objects
+        } catch let jsonError {
+            print("Failed to decode JSON", jsonError)
+            return nil
         }
     }
 }

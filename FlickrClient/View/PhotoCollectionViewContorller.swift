@@ -17,9 +17,9 @@ class PhotoCollectionViewContorller: UICollectionViewController {
     
     private let reuseIdentifier = "FlickrCell"
     private let sectionInsets = UIEdgeInsets(top: 20.0, left: 20.0, bottom: 20.0, right: 20.0)
-    private let networkDataFetcher = NetworkDataFetcher(networkService: NetworkService(apiKey: "207453be27ace4aff3011edca54a6dde"))
+    private let networkService = NetworkService(apiKey: "207453be27ace4aff3011edca54a6dde")
     private let locationService = LocationService()
-    private var searchResults: SearchResults?
+    private var flickrResults: FlickrResults?
     private var Photos: [Photo] = []
     var fetcherPage: String = ""
     
@@ -59,7 +59,7 @@ class PhotoCollectionViewContorller: UICollectionViewController {
         cell.index = index
         cell.imageView.image = self.Photos[index].thumbnail
         
-        if let searchResult = self.searchResults {
+        if let searchResult = self.flickrResults {
             if self.Photos.count - 2 == indexPath.row && searchResult.photos.pages > searchResult.photos.page {
                 self.loadImages(searchTerm: self.textField.text!, page: searchResult.photos.page + 1)
             }
@@ -120,21 +120,15 @@ extension PhotoCollectionViewContorller {
         present(alert, animated: true, completion: nil)
     }
     
-    private func loadImages(searchTerm: String, async: Bool = false, page: Int? = nil) -> Void {
+    private func loadImages(searchTerm: String, page: Int? = nil) -> Void {
         self.spinner.startAnimating()
-        self.networkDataFetcher.fetchImages(searchTerm: searchTerm, latitude: self.locationService.latitude, longitude: self.locationService.longitude, page: page) { [weak self] (searchResults) in
-            self?.searchResults = searchResults
+        self.networkService.request(searchTerm: searchTerm, latitude: self.locationService.latitude, longitude: self.locationService.longitude, page: page) { [weak self] (flickrResults: FlickrResults?, photos: [Photo]?) in
+            guard let flickrResults = flickrResults, let photos = photos else { return }
+            self?.flickrResults = flickrResults
             if page == nil { self?.Photos.removeAll() }
-            self?.searchResults?.photos.photo.forEach { flickrPhoto in
-                let photo = Photo(flickrPhoto: flickrPhoto)
-                let url = photo.url(size: Photo.thumbnailSize)
-                if let img = photo.loadImage(by: url) {
-                    photo.thumbnail = img
-                    self?.Photos.append(photo)
-                }
-            }
+            self?.Photos.append(contentsOf: photos)
             self?.collectionView?.reloadData()
+            self?.spinner.stopAnimating()
         }
-        self.spinner.stopAnimating()
     }
 }

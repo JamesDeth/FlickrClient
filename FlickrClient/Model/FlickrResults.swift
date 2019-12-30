@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct SearchResults: Decodable {
+struct FlickrResults: Decodable {
     let photos: Photos
 }
 
@@ -19,8 +19,8 @@ struct Photos: Decodable {
     let total: String
     let photo: [FlickrPhoto]
 }
+
 struct FlickrPhoto: Decodable {
-    
     let id: String
     let owner: String
     let secret: String
@@ -30,6 +30,4 @@ struct FlickrPhoto: Decodable {
     let ispublic: Int
     let isfriend: Int
     let isfamily: Int
-    
-    
 }
